@@ -4,17 +4,19 @@ wordList = ["About",	'Alert',	'Argue',	'Beach',
 'Abuse',	'Alive',	'Array',	'Begin']
 
 selectedWord = ''
-wordResultList = []
 correctLetters = 0
 tries = 0
 
+# Selects random word from the wordList.
 def selectWord():
   randomNum = random.randint(0, len(wordList) - 1)
   selectedWord = wordList[randomNum]
   selectedWord = selectedWord.lower()
   return selectedWord
 
-def guessCheck(guessedWord):
+# This function takes in what was guessed and for each letter checks it against each letter of the actual word.
+def guessCheck(guessedWord) -> list:
+  wordResultList = []
   lettersChecked = 0
   while lettersChecked != 5: 
     if guessedWord[lettersChecked] in selectedWord and guessedWord[lettersChecked] == selectedWord[lettersChecked]:
@@ -31,8 +33,8 @@ def guessCheck(guessedWord):
 print('Welcome to bootWord, your favorite Wordle knockoff. \nOur pool of words is ' + str(len(wordList)) + ' words long. \nYou will have five tries to guess the word.\nPress ENTER to continue.')
 input()
 selectedWord = selectWord()
-print(selectedWord)
 
+#This loop is the main game loop. It will run until the game ends.
 while correctLetters != 5 and tries != 5:
   guess = ''
   print('Guess a five letter word.')
