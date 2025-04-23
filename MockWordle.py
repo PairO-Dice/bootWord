@@ -1,11 +1,14 @@
 import random 
-wordList = ["About",	'Alert',	'Argue',	'Beach',
-'Above', 'Alike',	'Arise',	'Began',
-'Abuse',	'Alive',	'Array',	'Begin']
-
-selectedWord = ''
-correctLetters = 0
-tries = 0
+wordList = [
+    "about",'alert','argue','beach',
+    'above','alike','arise','began',
+    'abuse','alive','array','begin',
+    "apple", "brisk", "cabin", "daisy", "eagle", "flint", "grape", "honey", "ivory", "jelly",
+    "koala", "lemon", "mango", "noble", "oxide", "piano", "quilt", "raven", "sugar", "tiger",
+    "umbra", "vigor", "whale", "xenon", "yacht", "zebra", "blaze", "charm", "drift", "elite",
+    "frost", "gleam", "haste", "inbox", "jumpy", "kneel", "latch", "mirth", "nudge", "orbit",
+    "pearl", "quake", "risen", "spice", "trust", "uncle", "verge", "woven", "yield", "zesty"
+]
 
 # Selects random word from the wordList.
 def selectWord():
@@ -29,28 +32,50 @@ def guessCheck(guessedWord) -> list:
   wordResult = wordResultList[0:5]
   return wordResult
 
+#This loop is the main game loop. It will run until the game ends.
+def gameLoop():
+    correctLetters = 0
+    tries = 0
+    while correctLetters != 5 and tries != 5:
+      guess = ''
+      print('Guess a five letter word.')
+      guess = input()
+      guess = str(guess)
+      guess = guess.lower()
+      if len(guess) != 5:
+        print('Please type a five letter word.')
+        continue
+      else:
+        print(guessCheck(guess))
+        correctLetters = guessCheck(guess).count('✔')
+        tries += 1
+        
+    if correctLetters == 5:
+      print('Congrats! You won bootWord!')
+      playAgain()
+    elif tries == 5 and correctLetters != 5:
+      print('Out of guesses. Maybe next time.')
+      playAgain()
+
+def playAgain():
+    response = input("Would you like to play again? \n[1] Yes\n[2] No\n")
+    
+    if response == '1':
+        print("Here we go again!")
+        selectedWord = selectWord()
+        gameLoop()
+    elif response == '2':
+        print("Until next time! Goodbye!")
+    else:
+        print("Invalid response, try again.")
+        playAgain()
+
+
+selectedWord = ''
+
 
 print('Welcome to bootWord, your favorite Wordle knockoff. \nOur pool of words is ' + str(len(wordList)) + ' words long. \nYou will have five tries to guess the word.\nPress ENTER to continue.')
 input()
 selectedWord = selectWord()
-
-#This loop is the main game loop. It will run until the game ends.
-while correctLetters != 5 and tries != 5:
-  guess = ''
-  print('Guess a five letter word.')
-  guess = input()
-  guess = str(guess)
-  guess = guess.lower()
-  if len(guess) != 5:
-    print('Please type a five letter word.')
-    continue
-  else:
-    print(guessCheck(guess))
-    correctLetters = guessCheck(guess).count('✔')
-    tries += 1
-
-if correctLetters == 5:
-  print('Congrats! You won bootWord!')
-elif tries == 5 and correctLetters != 5:
-  print('Out of guesses. Maybe next time.')
+gameLoop()
     
